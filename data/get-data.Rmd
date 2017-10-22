@@ -10,3 +10,7 @@ library(tidyverse)
 library(syllable)
 ```
 
+```{r}
+subtlex <- read_tsv("http://crr.ugent.be/papers/SUBTLEX-UK.txt", trim_ws = T)
+```
+
