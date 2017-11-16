@@ -40,7 +40,15 @@ cvc_ptk <- subtlex %>%
             nchar(ipa),
             nchar(ipa)
         ) %in% target,
-        is.na(Homophonic_entry)
-    )
+        is.na(Homophonic_entry))
+    
 ```
 
+The next chunk filters out words with word-initial /h/
+and includes only those with word-final /t/
+```{r filter}
+cvc_t <- cvc_ptk %>% 
+  filter(
+    substring(ipa, nchar(ipa), nchar(ipa)) == 't',
+    substring(ipa, 1, 1) != 'h')
+```
