@@ -10,19 +10,37 @@ library(tidyverse)
 library(syllable)
 ```
 
-```{r}
-subtlex <- read_tsv("http://crr.ugent.be/papers/SUBTLEX-UK.txt", trim_ws = T)
-```
-
-```{r}
+```{r get-database}
 ipa <- read_csv("./arpabet2ipa.csv") %>%
     mutate(arpabet = tolower(arpabet))
 pronounce <- read_csv("./pronounce.csv", col_names = c("word", "arpabet")) %>%
-    mutate(arpabet = strsplit(as.character(arpabet), " ")) %>%
+    distinct(word, .keep_all = TRUE) %>%
+    mutate(
+        word = tolower(word),
+        arpabet = strsplit(as.character(arpabet), " ")
+    ) %>%
     unnest() %>%
     left_join(y = ipa) %>%
     select(-arpabet) %>%
     group_by(word) %>%
     summarise(ipa = paste(ipa, collapse = ""), cv = paste(cv, collapse = ""))
+
+subtlex <- read_tsv("http://crr.ugent.be/papers/SUBTLEX-UK.txt", trim_ws = T) %>%
+    left_join(y = pronounce, by = c("Spelling" = "word"))
+```
+
+```{r filter}
+target <- c("t", "p", "k")
+
+cvc_ptk <- subtlex %>%
+    filter(
+        cv == "CVC",
+        substring(
+            ipa,
+            nchar(ipa),
+            nchar(ipa)
+        ) %in% target,
+        is.na(Homophonic_entry)
+    )
 ```
 
