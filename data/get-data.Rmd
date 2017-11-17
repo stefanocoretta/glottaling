@@ -45,11 +45,19 @@ cvc_ptk <- subtlex %>%
     )
 ```
 
-The next chunk filters out words with word-initial /h/
-and includes only those with word-final /t/
+The next chunk creates tibbles with word-final /t/, word-final /p/, and word-final /k/ words separately.
+
 ```{r filter}
 cvc_t <- cvc_ptk %>% 
   filter(
     substring(ipa, nchar(ipa), nchar(ipa)) == 't'
+    )
+cvc_p <- cvc_ptk %>% 
+  filter(
+    substring(ipa, nchar(ipa), nchar(ipa)) == 'p'
+    )
+cvc_k <- cvc_ptk %>% 
+  filter(
+    substring(ipa, nchar(ipa), nchar(ipa)) == 'k'
     )
 ```
