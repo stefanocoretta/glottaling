@@ -10,6 +10,13 @@ library(tidyverse)
 library(syllable)
 ```
 
+The following tibbles are created:
+- `ipa`: contains the conversion tables from ARPABET to IPA
+- `pronounce`: contains phonetic trascriptions
+    - the original file has ARPABET transcriptions, which are converted to IPA by joining with `ipa`
+    - `distinct()` is used to cope with multiple pronounciations in `pronounce.csv` (most of them are final -r words, which are reported with both rhotic and non-rhotic pronounciation)
+- `subtlex`: contains frequencies and IPA transcriptions
+
 ```{r get-database}
 ipa <- read_csv("./arpabet2ipa.csv") %>%
     mutate(arpabet = tolower(arpabet))
@@ -28,6 +35,8 @@ pronounce <- read_csv("./pronounce.csv", col_names = c("word", "arpabet")) %>%
 subtlex <- read_tsv("http://crr.ugent.be/papers/SUBTLEX-UK.txt", trim_ws = T) %>%
     left_join(y = pronounce, by = c("Spelling" = "word"))
 ```
+
+We can now filter words that are CVC and end in /p, t, k/.
 
 ```{r filter}
 target <- c("t", "p", "k")
