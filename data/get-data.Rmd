@@ -6,6 +6,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("../"))
 library(tidyverse)
 library(syllable)
 ```
@@ -30,9 +31,9 @@ pronounce <- read_csv("./pronounce.csv", col_names = c("word", "arpabet")) %>%
     left_join(y = ipa) %>%
     select(-arpabet) %>%
     group_by(word) %>%
-    summarise(ipa = paste(ipa, collapse = ""), cv = paste(cv, collapse = ""))
+    summarise(ipa = paste(ipa, collapse = "."), cv = paste(cv, collapse = ""))
 
-subtlex <- read_tsv("http://crr.ugent.be/papers/SUBTLEX-UK.txt", trim_ws = T) %>%
+subtlex <- read_csv("./data/subtlex.csv") %>%
     left_join(y = pronounce, by = c("Spelling" = "word"))
 ```
 
@@ -51,7 +52,9 @@ cvc_ptk <- subtlex %>%
         ) %in% target,
         is.na(Homophonic_entry),
         substring(ipa, 1, 1) != 'h'
-    )
+    )  %>%
+    mutate(ipa2 = ipa) %>%
+    separate(ipa2, c("C1", "V", "C2"))
 ```
 
 The next chunk creates tibbles with word-final /t/, word-final /p/, and word-final /k/ words separately.
