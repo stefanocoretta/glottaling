@@ -1,0 +1,65 @@
+sentence_id,sentence,word,position
+1,Say 'cat' again,cat,medial
+2,Say 'fat' again,fat,medial
+3,Say 'chat' again,chat,medial
+4,Say 'rat' again,rat,medial
+5,Say 'Jack' again,Jack,medial
+6,Say 'pack' again,pack,medial
+7,Say 'Mac' again,Mac,medial
+8,Say 'tack' again,tack,medial
+9,Say 'writ' again,writ,medial
+10,Say 'lit' again,lit,medial
+11,Say 'kit' again,kit,medial
+12,Say 'fit' again,fit,medial
+13,Say 'kick' again,kick,medial
+14,Say 'mick' again,mick,medial
+15,Say 'chick' again,chick,medial
+16,Say 'wick' again,wick,medial
+17,Say 'cut' again,cut,medial
+18,Say 'shut' again,shut,medial
+19,Say 'nut' again,nut,medial
+20,Say 'gut' again,gut,medial
+21,Say 'luck' again,luck,medial
+22,Say 'duck' again,duck,medial
+23,Say 'muck' again,muck,medial
+24,Say 'tuck' again,tuck,medial
+25,Say 'sort' again,sort,medial
+26,Say 'short' again,short,medial
+27,Say 'port' again,port,medial
+28,Say 'wrought' again,wrought,medial
+29,Say 'talk' again,talk,medial
+30,Say 'walk' again,walk,medial
+31,Say 'pork' again,pork,medial
+32,Say 'cork' again,cork,medial
+33,The word is 'cat',cat,final
+34,The word is 'fat',fat,final
+35,The word is 'chat',chat,final
+36,The word is 'rat',rat,final
+37,The word is 'Jack',Jack,final
+38,The word is 'pack',pack,final
+39,The word is 'Mac',Mac,final
+40,The word is 'tack',tack,final
+41,The word is 'writ',writ,final
+42,The word is 'lit',lit,final
+43,The word is 'kit',kit,final
+44,The word is 'fit',fit,final
+45,The word is 'kick',kick,final
+46,The word is 'mick',mick,final
+47,The word is 'chick',chick,final
+48,The word is 'wick',wick,final
+49,The word is 'cut',cut,final
+50,The word is 'shut',shut,final
+51,The word is 'nut',nut,final
+52,The word is 'gut',gut,final
+53,The word is 'luck',luck,final
+54,The word is 'duck',duck,final
+55,The word is 'muck',muck,final
+56,The word is 'tuck',tuck,final
+57,The word is 'sort',sort,final
+58,The word is 'short',short,final
+59,The word is 'port',port,final
+60,The word is 'wrought',wrought,final
+61,The word is 'talk',talk,final
+62,The word is 'walk',walk,final
+63,The word is 'pork',pork,final
+64,The word is 'cork',cork,final
