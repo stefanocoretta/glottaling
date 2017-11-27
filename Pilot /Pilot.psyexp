@@ -1,0 +1,68 @@
+<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="1.85.2">
+  <Settings>
+    <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
+    <Param name="color" updates="None" val="$[0,0,0]" valType="str"/>
+    <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+    <Param name="Experiment info" updates="None" val="{'participant':'', 'session':'001'}" valType="code"/>
+    <Param name="JS libs" updates="None" val="packaged" valType="str"/>
+    <Param name="Units" updates="None" val="use prefs" valType="str"/>
+    <Param name="Save excel file" updates="None" val="False" valType="bool"/>
+    <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
+    <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
+    <Param name="Window size (pixels)" updates="None" val="(1024, 768)" valType="code"/>
+    <Param name="Full-screen window" updates="None" val="True" valType="bool"/>
+    <Param name="blendMode" updates="None" val="avg" valType="str"/>
+    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="HTML path" updates="None" val="html" valType="str"/>
+    <Param name="Save csv file" updates="None" val="False" valType="bool"/>
+    <Param name="OSF Project ID" updates="None" val="" valType="str"/>
+    <Param name="Save log file" updates="None" val="True" valType="bool"/>
+    <Param name="Save wide csv file" updates="None" val="True" valType="bool"/>
+    <Param name="Show mouse" updates="None" val="False" valType="bool"/>
+    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
+    <Param name="Show info dlg" updates="None" val="True" valType="bool"/>
+    <Param name="expName" updates="None" val="Pilot" valType="str"/>
+    <Param name="logging level" updates="None" val="exp" valType="code"/>
+    <Param name="Screen" updates="None" val="1" valType="num"/>
+  </Settings>
+  <Routines>
+    <Routine name="trial">
+      <TextComponent name="utterance">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="utterance" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="set every repeat" val="$sentence" valType="str"/>
+        <Param name="stopVal" updates="constant" val="2.5" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.5" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
+      </TextComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="conditionsFile" updates="None" val="../../../../Users/massimilianocanzi/Documents/GitHub/glottaling/stimuli/sentences.csv" valType="str"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="3" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'position': u'medial', 'sentence_id': 1, 'word': u'cat', 'sentence': u&quot;Say 'cat' again&quot;}, {'position': u'medial', 'sentence_id': 2, 'word': u'fat', 'sentence': u&quot;Say 'fat' again&quot;}, {'position': u'medial', 'sentence_id': 3, 'word': u'chat', 'sentence': u&quot;Say 'chat' again&quot;}, {'position': u'medial', 'sentence_id': 4, 'word': u'rat', 'sentence': u&quot;Say 'rat' again&quot;}, {'position': u'medial', 'sentence_id': 5, 'word': u'Jack', 'sentence': u&quot;Say 'Jack' again&quot;}, {'position': u'medial', 'sentence_id': 6, 'word': u'pack', 'sentence': u&quot;Say 'pack' again&quot;}, {'position': u'medial', 'sentence_id': 7, 'word': u'Mac', 'sentence': u&quot;Say 'Mac' again&quot;}, {'position': u'medial', 'sentence_id': 8, 'word': u'tack', 'sentence': u&quot;Say 'tack' again&quot;}, {'position': u'medial', 'sentence_id': 9, 'word': u'writ', 'sentence': u&quot;Say 'writ' again&quot;}, {'position': u'medial', 'sentence_id': 10, 'word': u'lit', 'sentence': u&quot;Say 'lit' again&quot;}, {'position': u'medial', 'sentence_id': 11, 'word': u'kit', 'sentence': u&quot;Say 'kit' again&quot;}, {'position': u'medial', 'sentence_id': 12, 'word': u'fit', 'sentence': u&quot;Say 'fit' again&quot;}, {'position': u'medial', 'sentence_id': 13, 'word': u'kick', 'sentence': u&quot;Say 'kick' again&quot;}, {'position': u'medial', 'sentence_id': 14, 'word': u'mick', 'sentence': u&quot;Say 'mick' again&quot;}, {'position': u'medial', 'sentence_id': 15, 'word': u'chick', 'sentence': u&quot;Say 'chick' again&quot;}, {'position': u'medial', 'sentence_id': 16, 'word': u'wick', 'sentence': u&quot;Say 'wick' again&quot;}, {'position': u'medial', 'sentence_id': 17, 'word': u'cut', 'sentence': u&quot;Say 'cut' again&quot;}, {'position': u'medial', 'sentence_id': 18, 'word': u'shut', 'sentence': u&quot;Say 'shut' again&quot;}, {'position': u'medial', 'sentence_id': 19, 'word': u'nut', 'sentence': u&quot;Say 'nut' again&quot;}, {'position': u'medial', 'sentence_id': 20, 'word': u'gut', 'sentence': u&quot;Say 'gut' again&quot;}, {'position': u'medial', 'sentence_id': 21, 'word': u'luck', 'sentence': u&quot;Say 'luck' again&quot;}, {'position': u'medial', 'sentence_id': 22, 'word': u'duck', 'sentence': u&quot;Say 'duck' again&quot;}, {'position': u'medial', 'sentence_id': 23, 'word': u'muck', 'sentence': u&quot;Say 'muck' again&quot;}, {'position': u'medial', 'sentence_id': 24, 'word': u'tuck', 'sentence': u&quot;Say 'tuck' again&quot;}, {'position': u'medial', 'sentence_id': 25, 'word': u'sort', 'sentence': u&quot;Say 'sort' again&quot;}, {'position': u'medial', 'sentence_id': 26, 'word': u'short', 'sentence': u&quot;Say 'short' again&quot;}, {'position': u'medial', 'sentence_id': 27, 'word': u'port', 'sentence': u&quot;Say 'port' again&quot;}, {'position': u'medial', 'sentence_id': 28, 'word': u'wrought', 'sentence': u&quot;Say 'wrought' again&quot;}, {'position': u'medial', 'sentence_id': 29, 'word': u'talk', 'sentence': u&quot;Say 'talk' again&quot;}, {'position': u'medial', 'sentence_id': 30, 'word': u'walk', 'sentence': u&quot;Say 'walk' again&quot;}, {'position': u'medial', 'sentence_id': 31, 'word': u'pork', 'sentence': u&quot;Say 'pork' again&quot;}, {'position': u'medial', 'sentence_id': 32, 'word': u'cork', 'sentence': u&quot;Say 'cork' again&quot;}, {'position': u'final', 'sentence_id': 33, 'word': u'cat', 'sentence': u&quot;The word is 'cat'&quot;}, {'position': u'final', 'sentence_id': 34, 'word': u'fat', 'sentence': u&quot;The word is 'fat'&quot;}, {'position': u'final', 'sentence_id': 35, 'word': u'chat', 'sentence': u&quot;The word is 'chat'&quot;}, {'position': u'final', 'sentence_id': 36, 'word': u'rat', 'sentence': u&quot;The word is 'rat'&quot;}, {'position': u'final', 'sentence_id': 37, 'word': u'Jack', 'sentence': u&quot;The word is 'Jack'&quot;}, {'position': u'final', 'sentence_id': 38, 'word': u'pack', 'sentence': u&quot;The word is 'pack'&quot;}, {'position': u'final', 'sentence_id': 39, 'word': u'Mac', 'sentence': u&quot;The word is 'Mac'&quot;}, {'position': u'final', 'sentence_id': 40, 'word': u'tack', 'sentence': u&quot;The word is 'tack'&quot;}, {'position': u'final', 'sentence_id': 41, 'word': u'writ', 'sentence': u&quot;The word is 'writ'&quot;}, {'position': u'final', 'sentence_id': 42, 'word': u'lit', 'sentence': u&quot;The word is 'lit'&quot;}, {'position': u'final', 'sentence_id': 43, 'word': u'kit', 'sentence': u&quot;The word is 'kit'&quot;}, {'position': u'final', 'sentence_id': 44, 'word': u'fit', 'sentence': u&quot;The word is 'fit'&quot;}, {'position': u'final', 'sentence_id': 45, 'word': u'kick', 'sentence': u&quot;The word is 'kick'&quot;}, {'position': u'final', 'sentence_id': 46, 'word': u'mick', 'sentence': u&quot;The word is 'mick'&quot;}, {'position': u'final', 'sentence_id': 47, 'word': u'chick', 'sentence': u&quot;The word is 'chick'&quot;}, {'position': u'final', 'sentence_id': 48, 'word': u'wick', 'sentence': u&quot;The word is 'wick'&quot;}, {'position': u'final', 'sentence_id': 49, 'word': u'cut', 'sentence': u&quot;The word is 'cut'&quot;}, {'position': u'final', 'sentence_id': 50, 'word': u'shut', 'sentence': u&quot;The word is 'shut'&quot;}, {'position': u'final', 'sentence_id': 51, 'word': u'nut', 'sentence': u&quot;The word is 'nut'&quot;}, {'position': u'final', 'sentence_id': 52, 'word': u'gut', 'sentence': u&quot;The word is 'gut'&quot;}, {'position': u'final', 'sentence_id': 53, 'word': u'luck', 'sentence': u&quot;The word is 'luck'&quot;}, {'position': u'final', 'sentence_id': 54, 'word': u'duck', 'sentence': u&quot;The word is 'duck'&quot;}, {'position': u'final', 'sentence_id': 55, 'word': u'muck', 'sentence': u&quot;The word is 'muck'&quot;}, {'position': u'final', 'sentence_id': 56, 'word': u'tuck', 'sentence': u&quot;The word is 'tuck'&quot;}, {'position': u'final', 'sentence_id': 57, 'word': u'sort', 'sentence': u&quot;The word is 'sort'&quot;}, {'position': u'final', 'sentence_id': 58, 'word': u'short', 'sentence': u&quot;The word is 'short'&quot;}, {'position': u'final', 'sentence_id': 59, 'word': u'port', 'sentence': u&quot;The word is 'port'&quot;}, {'position': u'final', 'sentence_id': 60, 'word': u'wrought', 'sentence': u&quot;The word is 'wrought'&quot;}, {'position': u'final', 'sentence_id': 61, 'word': u'talk', 'sentence': u&quot;The word is 'talk'&quot;}, {'position': u'final', 'sentence_id': 62, 'word': u'walk', 'sentence': u&quot;The word is 'walk'&quot;}, {'position': u'final', 'sentence_id': 63, 'word': u'pork', 'sentence': u&quot;The word is 'pork'&quot;}, {'position': u'final', 'sentence_id': 64, 'word': u'cork', 'sentence': u&quot;The word is 'cork'&quot;}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+  </Flow>
+</PsychoPy2experiment>
