@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
-<PsychoPy2experiment encoding="utf-8" version="1.85.2">
+<PsychoPy2experiment encoding="utf-8" version="1.85.4">
   <Settings>
     <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
     <Param name="color" updates="None" val="$[0,0,0]" valType="str"/>
     <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
-    <Param name="Experiment info" updates="None" val="{u'Age': u'', u'ID': u'', u'Sex': u''}" valType="code"/>
+    <Param name="Experiment info" updates="None" val="{u'age': u'', u'ID': u'', u'sex': u''}" valType="code"/>
     <Param name="JS libs" updates="None" val="packaged" valType="str"/>
     <Param name="Units" updates="None" val="use prefs" valType="str"/>
     <Param name="Save excel file" updates="None" val="False" valType="bool"/>
@@ -17,12 +17,12 @@
     <Param name="HTML path" updates="None" val="html" valType="str"/>
     <Param name="Save csv file" updates="None" val="False" valType="bool"/>
     <Param name="OSF Project ID" updates="None" val="" valType="str"/>
-    <Param name="Save log file" updates="None" val="True" valType="bool"/>
+    <Param name="Save log file" updates="None" val="False" valType="bool"/>
     <Param name="Save wide csv file" updates="None" val="True" valType="bool"/>
     <Param name="Show mouse" updates="None" val="False" valType="bool"/>
-    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
+    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['ID'], expName, expInfo['date'])" valType="code"/>
     <Param name="Show info dlg" updates="None" val="True" valType="bool"/>
-    <Param name="expName" updates="None" val="Pilot" valType="str"/>
+    <Param name="expName" updates="None" val="glottal_pilot" valType="str"/>
     <Param name="logging level" updates="None" val="exp" valType="code"/>
     <Param name="Screen" updates="None" val="1" valType="num"/>
   </Settings>
