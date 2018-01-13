@@ -77,7 +77,7 @@ endfor
 ### "degg"
 ```praat
 selectObject: egg
-sentence_egg = Extract part: sentence_start, sentence_end, "rectangular", 1, "no"
+sentence_egg = Extract part: sentence_start, sentence_end, "rectangular", 1, "yes"
 
 Filter (pass Hann band): 40, 10000, 100
 @smoothing: smooth_width
@@ -86,16 +86,16 @@ time_lag = (smooth_width - 1) / 2 * sampling_period
 Shift times by: time_lag
 egg_pp = noprogress To PointProcess (periodic, peaks): 75, 600, "yes", "no"
 sentence_sound_end = Get end time
-Remove points between: 0, vowel_start - sentence_start
-Remove points between: vowel_end - sentence_start, sentence_sound_end
+Remove points between: 0, vowel_start
+Remove points between: vowel_end, sentence_sound_end
 
 selectObject: sentence_egg
 Copy: "degg"
 Formula: "self [col + 1] - self [col]"
 degg = Remove noise: 0, 0.1, 0.025, 80, 10000, 40, "Spectral subtraction"
 degg_pp = noprogress To PointProcess (periodic, peaks): 75, 600, "yes", "no"
-Remove points between: 0, vowel_start - sentence_start
-Remove points between: vowel_end - sentence_start, sentence_sound_end
+Remove points between: 0, vowel_start
+Remove points between: vowel_end, sentence_sound_end
 ```
 
 ### "degg loop"
@@ -129,8 +129,8 @@ for point to egg_points - 2
         degg_maximum_rel = (degg_maximum - egg_minimum_1) / period
         degg_minimum_rel = (degg_minimum - egg_minimum_1) / period
 
-        time = egg_minimum_1 - vowel_start - sentence_start
-        proportion = (egg_minimum_1 - vowel_start - sentence_start) / (vowel_end - sentence_start - vowel_start - sentence_start)
+        time = egg_minimum_1 - vowel_start
+        proportion = (egg_minimum_1 - vowel_start) / (vowel_end - vowel_start)
 
         results_line$ = "'speaker$','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
 
