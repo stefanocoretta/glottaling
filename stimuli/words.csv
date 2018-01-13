@@ -3,9 +3,9 @@ word_id,word,frequency,log_frequency,consonant_1,vowel,consonant_2
 2,fat,11832,4.77,f,æ,t
 3,chat,7933,4.6,tʃ,æ,t
 4,rat,3386,4.23,r,æ,t
-5,Jack,20914,5.02,dʒ,æ,k
+5,jack,20914,5.02,dʒ,æ,k
 6,pack,8492,4.62,p,æ,k
-7,Mac,2354,4.07,m,æ,k
+7,mac,2354,4.07,m,æ,k
 8,tack,637,3.5,t,æ,k
 9,writ,500,3.4,r,ɪ,t
 10,lit,2111,4.02,l,ɪ,t
