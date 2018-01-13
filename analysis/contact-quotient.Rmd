@@ -23,6 +23,13 @@ cq <- read_csv("./results/tracegram.csv") %>%
         position = factor(position, levels = c("medial", "final"))
     ) %>%
     left_join(y = words) %>%
+    mutate(
+        freq_bin = ifelse(
+            log_frequency < 4.465,
+            "low",
+            "high"
+        )
+    ) %>%
     mutate_if(is.character, as.factor) %>%
     filter(cq > 0)
 ```
@@ -43,3 +50,19 @@ cq %>%
     geom_smooth() +
     facet_wrap(~ consonant_2)
 ```
+
+```{r}
+cq %>%
+    ggplot(aes(proportion, cq, colour = freq_bin)) +
+    geom_point(alpha = 0.2) +
+    geom_smooth() +
+    facet_grid(position ~ consonant_2)
+```
+
+```{r}
+cq %>%
+    ggplot(aes(freq_bin, cq)) +
+    geom_boxplot() +
+    facet_grid(position ~ consonant_2)
+```
+
