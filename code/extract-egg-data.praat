@@ -92,18 +92,20 @@ for file from 1 to number_of_files
                         degg_maximum = Get time from index: degg_maximum_point_1 + 1
                     endif
             
-                    selectObject: degg
-                    degg_minimum = Get time of minimum: degg_maximum, egg_minimum_2, "Sinc70"
+                    if degg_maximum <> undefined
+                        selectObject: degg
+                        degg_minimum = Get time of minimum: degg_maximum, egg_minimum_2, "Sinc70"
             
-                    degg_maximum_rel = (degg_maximum - egg_minimum_1) / period
-                    degg_minimum_rel = (degg_minimum - egg_minimum_1) / period
+                        degg_maximum_rel = (degg_maximum - egg_minimum_1) / period
+                        degg_minimum_rel = (degg_minimum - egg_minimum_1) / period
             
-                    time = egg_minimum_1 - vowel_start
-                    proportion = (egg_minimum_1 - vowel_start) / (vowel_end - vowel_start)
+                        time = egg_minimum_1 - vowel_start
+                        proportion = (egg_minimum_1 - vowel_start) / (vowel_end - vowel_start)
             
-                    results_line$ = "'speaker$','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
+                        results_line$ = "'speaker$','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
             
-                    appendFileLine: results_file$, results_line$
+                        appendFileLine: results_file$, results_line$
+                    endif
                 endif
             endfor
     
