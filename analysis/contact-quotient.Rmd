@@ -10,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = normalizePath("../"))
 library(tidyverse)
 theme_set(theme_minimal())
+library(mgcv)
+library(itsadug)
 ```
 
 # Read data
@@ -64,5 +66,39 @@ cq %>%
     ggplot(aes(freq_bin, cq)) +
     geom_boxplot() +
     facet_grid(position ~ consonant_2)
+```
+
+```{r}
+cq_gam <- bam(
+    cq ~
+        s(proportion, by = position) +
+        ti(proportion, log_frequency),
+    data = cq,
+    method = "ML"
+)
+
+summary(cq_gam)
+```
+
+```{r}
+plot_smooth(
+    cq_gam,
+    "proportion",
+    plot_all = "position",
+    rug = FALSE
+)
+```
+
+```{r}
+fvisgam(
+    cq_gam,
+    view = c("proportion", "log_frequency"),
+    cond = list(position = "medial")
+)
+fvisgam(
+    cq_gam,
+    view = c("proportion", "log_frequency"),
+    cond = list(position = "final")
+)
 ```
 
