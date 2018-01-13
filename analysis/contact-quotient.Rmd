@@ -1,0 +1,45 @@
+---
+title: "Contact Quotient analysis"
+author: "Stefano Coretta and Massimiliano Canzi"
+date: "13/01/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("../"))
+library(tidyverse)
+theme_set(theme_minimal())
+```
+
+# Read data
+
+```{r read-data}
+words <- read_csv("./stimuli/words.csv")
+
+cq <- read_csv("./results/tracegram.csv") %>%
+    mutate(
+        cq = minimum - maximum,
+        position = factor(position, levels = c("medial", "final"))
+    ) %>%
+    left_join(y = words) %>%
+    mutate_if(is.character, as.factor) %>%
+    filter(cq > 0)
+```
+
+# Exploration
+
+```{r}
+cq %>%
+    ggplot(aes(proportion, cq, colour = position)) +
+    geom_point(alpha = 0.2) +
+    geom_smooth()
+```
+
+```{r}
+cq %>%
+    ggplot(aes(proportion, cq, colour = position)) +
+    geom_point(alpha = 0.2) +
+    geom_smooth() +
+    facet_wrap(~ consonant_2)
+```
