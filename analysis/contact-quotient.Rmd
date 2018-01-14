@@ -12,6 +12,7 @@ library(tidyverse)
 theme_set(theme_minimal())
 library(mgcv)
 library(itsadug)
+options(contrasts = rep("contr.treatment", 2))
 ```
 
 # Read data
@@ -22,7 +23,7 @@ words <- read_csv("./stimuli/words.csv")
 cq <- read_csv("./results/tracegram.csv") %>%
     mutate(
         cq = minimum - maximum,
-        position = factor(position, levels = c("medial", "final"))
+        position = ordered(position, levels = c("medial", "final"))
     ) %>%
     left_join(y = words) %>%
     mutate(
@@ -30,7 +31,9 @@ cq <- read_csv("./results/tracegram.csv") %>%
             log_frequency < 4.465,
             "low",
             "high"
-        )
+        ),
+        vowel = as.ordered(vowel),
+        consonant_2 = ordered(consonant_2, levels = c("k", "t"))
     ) %>%
     mutate_if(is.character, as.factor) %>%
     filter(cq > 0)
@@ -102,3 +105,37 @@ fvisgam(
 )
 ```
 
+```{r}
+cq_gam_2 <- bam(
+    cq ~
+        position +
+        vowel +
+        consonant_2 +
+        s(proportion) +
+        s(proportion, by = position) +
+        s(proportion, by = vowel) +
+        s(proportion, by = consonant_2) +
+        s(proportion, by = interaction(consonant_2, position)) +
+        ti(proportion, log_frequency) +
+        s(proportion, word, bs = "fs"),
+    data = cq,
+    method = "fREML"
+)
+
+summary(cq_gam_2)
+```
+
+```{r}
+fvisgam(
+    cq_gam_2,
+    view = c("proportion", "log_frequency"),
+    cond = list(position = "medial"),
+    rm.ranef = TRUE
+)
+fvisgam(
+    cq_gam_2,
+    view = c("proportion", "log_frequency"),
+    cond = list(position = "final"),
+    rm.ranef = TRUE
+)
+```
