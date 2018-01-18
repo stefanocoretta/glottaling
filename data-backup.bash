@@ -15,11 +15,11 @@ rsync -avz --no-whole-file --delete --exclude '*.DS_Store' \
 ## Pull test
 
 rsync -anv --no-whole-file --delete --exclude '*.DS_Store' \
-    /Volumes/Multimedia/ling-data-backup/glottaling/data/
-    ~/GitHub/glottaling/data/ \
+    /Volumes/Multimedia/ling-data-backup/glottaling/data/ \
+    ~/GitHub/glottaling/data/
 
 ## Pull run
 
 rsync -avz --no-whole-file --delete --exclude '*.DS_Store' \
-    /Volumes/Multimedia/ling-data-backup/glottaling/data/
-    ~/GitHub/glottaling/data/ \
+    /Volumes/Multimedia/ling-data-backup/glottaling/data/ \
+    ~/GitHub/glottaling/data/
