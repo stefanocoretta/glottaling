@@ -33,7 +33,8 @@ cq <- read_csv("./results/tracegram.csv") %>%
             "high"
         ),
         vowel = as.ordered(vowel),
-        consonant_2 = ordered(consonant_2, levels = c("k", "t"))
+        consonant_2 = ordered(consonant_2, levels = c("k", "t")),
+        cons_pos = interaction(consonant_2, position)
     ) %>%
     mutate_if(is.character, as.factor) %>%
     filter(cq > 0)
@@ -41,14 +42,14 @@ cq <- read_csv("./results/tracegram.csv") %>%
 
 # Exploration
 
-```{r}
+```{r cq-position}
 cq %>%
     ggplot(aes(proportion, cq, colour = position)) +
     geom_point(alpha = 0.2) +
     geom_smooth()
 ```
 
-```{r}
+```{r cq-position-consonant}
 cq %>%
     ggplot(aes(proportion, cq, colour = position)) +
     geom_point(alpha = 0.2) +
@@ -56,7 +57,7 @@ cq %>%
     facet_wrap(~ consonant_2)
 ```
 
-```{r}
+```{r cq-position-consonant-frequency}
 cq %>%
     ggplot(aes(proportion, cq, colour = freq_bin)) +
     geom_point(alpha = 0.2) +
@@ -64,59 +65,29 @@ cq %>%
     facet_grid(position ~ consonant_2)
 ```
 
-```{r}
+```{r cq-boxplot}
 cq %>%
     ggplot(aes(freq_bin, cq)) +
     geom_boxplot() +
     facet_grid(position ~ consonant_2)
 ```
 
-```{r}
-cq_gam <- bam(
-    cq ~
-        s(proportion, by = position) +
-        ti(proportion, log_frequency),
-    data = cq,
-    method = "ML"
-)
 
-summary(cq_gam)
-```
 
-```{r}
-plot_smooth(
-    cq_gam,
-    "proportion",
-    plot_all = "position",
-    rug = FALSE
-)
-```
-
-```{r}
-fvisgam(
-    cq_gam,
-    view = c("proportion", "log_frequency"),
-    cond = list(position = "medial")
-)
-fvisgam(
-    cq_gam,
-    view = c("proportion", "log_frequency"),
-    cond = list(position = "final")
-)
-```
-
-```{r}
+```{r cq-gam}
 cq_gam_2 <- bam(
     cq ~
         position +
         vowel +
         consonant_2 +
+        log_frequency +
         s(proportion) +
         s(proportion, by = position) +
         s(proportion, by = vowel) +
         s(proportion, by = consonant_2) +
-        s(proportion, by = interaction(consonant_2, position)) +
+        s(proportion, by = cons_pos) +
         ti(proportion, log_frequency) +
+        ti(proportion, log_frequency, by = consonant_2) +
         s(proportion, word, bs = "fs"),
     data = cq,
     method = "fREML"
@@ -125,7 +96,7 @@ cq_gam_2 <- bam(
 summary(cq_gam_2)
 ```
 
-```{r}
+```{r cq-gam-plot}
 fvisgam(
     cq_gam_2,
     view = c("proportion", "log_frequency"),
