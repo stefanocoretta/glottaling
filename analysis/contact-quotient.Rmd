@@ -12,6 +12,8 @@ library(tidyverse)
 theme_set(theme_minimal())
 library(mgcv)
 library(itsadug)
+library(lmerTest)
+library(effects)
 options(contrasts = rep("contr.treatment", 2))
 ```
 
@@ -72,7 +74,7 @@ cq %>%
     facet_grid(position ~ consonant_2)
 ```
 
-
+# GAM
 
 ```{r cq-gam}
 cq_gam_2 <- bam(
@@ -124,7 +126,8 @@ plot_smooth(
     rm.ranef = TRUE,
     rug = FALSE,
     col = "red",
-    ylim = c(0.1, 0.6)
+    ylim = c(0.1, 0.6),
+    n.grid = 20
 )
 plot_smooth(
     cq_gam_2,
@@ -139,7 +142,8 @@ plot_smooth(
     rug = FALSE,
     add = TRUE,
     col = "green",
-    ylim = c(0.1, 0.6)
+    ylim = c(0.1, 0.6),
+    n.grid = 20
 )
 plot_smooth(
     cq_gam_2,
@@ -154,7 +158,26 @@ plot_smooth(
     rug = FALSE,
     add = TRUE,
     col = "blue",
-    ylim = c(0.1, 0.6)
+    ylim = c(0.1, 0.6),
+    n.grid = 20
 )
+```
+
+# LMER
+
+```{r}
+cq_lmer <- lmer(
+  cq ~
+    position *
+    consonant_2 *
+    log_frequency +
+    (1|word),
+  data = cq
+)
+summary(cq_lmer)
+```
+
+```{r}
+plot(allEffects(cq_lmer))
 ```
 
