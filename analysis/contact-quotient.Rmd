@@ -121,7 +121,7 @@ plot_smooth(
         log_frequency = 4.5,
         vowel = "æ",
         position = "final",
-        cons_pos = "t.medial"
+        cons_pos = "t.final"
     ),
     rm.ranef = TRUE,
     rug = FALSE,
@@ -133,9 +133,41 @@ plot_smooth(
     cq_gam_2,
     "proportion",
     cond = list(
+        log_frequency = 4,
+        vowel = "æ",
+        position = "final",
+        cons_pos = "t.final"
+    ),
+    rm.ranef = TRUE,
+    rug = FALSE,
+    add = TRUE,
+    col = "yellow",
+    ylim = c(0.1, 0.6),
+    n.grid = 20
+)
+plot_smooth(
+    cq_gam_2,
+    "proportion",
+    cond = list(
+        log_frequency = 3.5,
+        vowel = "æ",
+        position = "final",
+        cons_pos = "t.final"
+    ),
+    rm.ranef = TRUE,
+    rug = FALSE,
+    add = TRUE,
+    col = "black",
+    ylim = c(0.1, 0.6),
+    n.grid = 20
+)
+plot_smooth(
+    cq_gam_2,
+    "proportion",
+    cond = list(
         log_frequency = 5,
         vowel = "æ",
-        position = "medial",
+        position = "final",
         cons_pos = "t.final"
     ),
     rm.ranef = TRUE,
@@ -152,6 +184,56 @@ plot_smooth(
         log_frequency = 5.5,
         vowel = "æ",
         position = "final",
+        cons_pos = "t.final"
+    ),
+    rm.ranef = TRUE,
+    rug = FALSE,
+    add = TRUE,
+    col = "blue",
+    ylim = c(0.1, 0.6),
+    n.grid = 20
+)
+```
+
+```{r}
+plot_smooth(
+    cq_gam_2,
+    "proportion",
+    cond = list(
+        log_frequency = 4.5,
+        vowel = "æ",
+        position = "medial",
+        cons_pos = "t.medial"
+    ),
+    rm.ranef = TRUE,
+    rug = FALSE,
+    col = "red",
+    ylim = c(0.1, 0.6),
+    n.grid = 20
+)
+plot_smooth(
+    cq_gam_2,
+    "proportion",
+    cond = list(
+        log_frequency = 5,
+        vowel = "æ",
+        position = "medial",
+        cons_pos = "t.medial"
+    ),
+    rm.ranef = TRUE,
+    rug = FALSE,
+    add = TRUE,
+    col = "green",
+    ylim = c(0.1, 0.6),
+    n.grid = 20
+)
+plot_smooth(
+    cq_gam_2,
+    "proportion",
+    cond = list(
+        log_frequency = 5.5,
+        vowel = "æ",
+        position = "medial",
         cons_pos = "t.medial"
     ),
     rm.ranef = TRUE,
