@@ -116,26 +116,30 @@ for point to egg_points - 2
 
     if period <= mean_period * 2
         selectObject: degg_pp
-        degg_maximum_point_1 = Get nearest index: egg_minimum_1
-        degg_maximum = Get time from index: degg_maximum_point_1
+        degg_pp_points = Get number of points
 
-        if degg_maximum <= egg_minimum_1
-            degg_maximum = Get time from index: degg_maximum_point_1 + 1
-        endif
+        if degg_pp_points != 0
+          degg_maximum_point_1 = Get nearest index: egg_minimum_1
+          degg_maximum = Get time from index: degg_maximum_point_1
 
-        if degg_maximum <> undefined
-            selectObject: degg
-            degg_minimum = Get time of minimum: degg_maximum, egg_minimum_2, "Sinc70"
+          if degg_maximum <= egg_minimum_1
+              degg_maximum = Get time from index: degg_maximum_point_1 + 1
+          endif
 
-            degg_maximum_rel = (degg_maximum - egg_minimum_1) / period
-            degg_minimum_rel = (degg_minimum - egg_minimum_1) / period
+          if degg_maximum != undefined
+              selectObject: degg
+              degg_minimum = Get time of minimum: degg_maximum, egg_minimum_2, "Sinc70"
 
-            time = egg_minimum_1 - vowel_start
-            proportion = (egg_minimum_1 - vowel_start) / (vowel_end - vowel_start)
+              degg_maximum_rel = (degg_maximum - egg_minimum_1) / period
+              degg_minimum_rel = (degg_minimum - egg_minimum_1) / period
 
-            results_line$ = "'speaker$','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
+              time = egg_minimum_1 - vowel_start
+              proportion = (egg_minimum_1 - vowel_start) / (vowel_end - vowel_start)
 
-            appendFileLine: results_file$, results_line$
+              results_line$ = "'speaker$','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
+
+              appendFileLine: results_file$, results_line$
+          endif
         endif
     endif
 endfor
