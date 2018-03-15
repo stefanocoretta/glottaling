@@ -23,99 +23,99 @@ options(contrasts = rep("contr.treatment", 2))
 words <- read_csv("./stimuli/words.csv")
 
 cq <- read_csv("./results/tracegram.csv") %>%
-    mutate(
-        cq = minimum - maximum,
-        position = ordered(position, levels = c("medial", "final"))
-    ) %>%
-    left_join(y = words) %>%
-    mutate(
-        freq_bin = ifelse(
-            log_frequency < 4.465,
-            "low",
-            "high"
-        ),
-        vowel = as.ordered(vowel),
-        consonant_2 = ordered(consonant_2, levels = c("k", "t")),
-        cons_pos = interaction(consonant_2, position)
-    ) %>%
-    mutate_if(is.character, as.factor) %>%
-    filter(cq > 0)
+  mutate(
+    cq = minimum - maximum,
+    position = ordered(position, levels = c("medial", "final"))
+  ) %>%
+  left_join(y = words) %>%
+  mutate(
+    freq_bin = ifelse(
+      log_frequency < 4.465,
+      "low",
+      "high"
+    ),
+    vowel = as.ordered(vowel),
+    consonant_2 = ordered(consonant_2, levels = c("k", "t")),
+    cons_pos = interaction(consonant_2, position)
+  ) %>%
+  mutate_if(is.character, as.factor) %>%
+  filter(cq > 0)
 ```
 
 # Exploration
 
 ```{r cq-position}
 cq %>%
-    ggplot(aes(proportion, cq, colour = position)) +
-    geom_point(alpha = 0.2) +
-    geom_smooth()
+  ggplot(aes(proportion, cq, colour = position)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth()
 ```
 
 ```{r cq-position-consonant}
 cq %>%
-    ggplot(aes(proportion, cq, colour = position)) +
-    geom_point(alpha = 0.2) +
-    geom_smooth() +
-    facet_wrap(~ consonant_2)
+  ggplot(aes(proportion, cq, colour = position)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth() +
+  facet_wrap(~ consonant_2)
 ```
 
 ```{r cq-position-consonant-frequency}
 cq %>%
-    ggplot(aes(proportion, cq, colour = freq_bin)) +
-    geom_point(alpha = 0.2) +
-    geom_smooth() +
-    facet_grid(position ~ consonant_2)
+  ggplot(aes(proportion, cq, colour = freq_bin)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth() +
+  facet_grid(position ~ consonant_2)
 ```
 
 ```{r cq-boxplot}
 cq %>%
-    ggplot(aes(freq_bin, cq)) +
-    geom_boxplot() +
-    facet_grid(position ~ consonant_2)
+  ggplot(aes(freq_bin, cq)) +
+  geom_boxplot() +
+  facet_grid(position ~ consonant_2)
 ```
 
 ```{r}
 cq %>%
-    filter(proportion > 0.49, proportion < 0.51) %>%
-    ggplot(aes(position, cq)) +
-    geom_boxplot()
+  filter(proportion > 0.49, proportion < 0.51) %>%
+  ggplot(aes(position, cq)) +
+  geom_boxplot()
 ```
 
 ```{r}
 cq %>%
-    filter(proportion > 0.49, proportion < 0.51) %>%
-    ggplot(aes(position, cq)) +
-    geom_boxplot() +
-    facet_grid(~ consonant_2)
+  filter(proportion > 0.49, proportion < 0.51) %>%
+  ggplot(aes(position, cq)) +
+  geom_boxplot() +
+  facet_grid(~ consonant_2)
 ```
 
 ```{r}
 cq %>%
-    filter(proportion > 0.49, proportion < 0.51, cq < 0.6) %>%
-    ggplot(aes(position, cq)) +
-    geom_boxplot() +
-    facet_grid(~ consonant_2)
+  filter(proportion > 0.49, proportion < 0.51, cq < 0.6) %>%
+  ggplot(aes(position, cq)) +
+  geom_boxplot() +
+  facet_grid(~ consonant_2)
 ```
 
 # GAM
 
 ```{r cq-gam}
 cq_gam_2 <- bam(
-    cq ~
-        position +
-        vowel +
-        consonant_2 +
-        log_frequency +
-        s(proportion) +
-        s(proportion, by = position) +
-        s(proportion, by = vowel) +
-        s(proportion, by = consonant_2) +
-        s(proportion, by = cons_pos) +
-        ti(proportion, log_frequency) +
-        ti(proportion, log_frequency, by = consonant_2) +
-        s(proportion, word, bs = "fs"),
-    data = cq,
-    method = "fREML"
+  cq ~
+    position +
+    vowel +
+    consonant_2 +
+    log_frequency +
+    s(proportion) +
+    s(proportion, by = position) +
+    s(proportion, by = vowel) +
+    s(proportion, by = consonant_2) +
+    s(proportion, by = cons_pos) +
+    ti(proportion, log_frequency) +
+    ti(proportion, log_frequency, by = consonant_2) +
+    s(proportion, word, bs = "fs"),
+  data = cq,
+  method = "fREML"
 )
 
 summary(cq_gam_2)
@@ -123,148 +123,148 @@ summary(cq_gam_2)
 
 ```{r cq-gam-plot}
 fvisgam(
-    cq_gam_2,
-    view = c("proportion", "log_frequency"),
-    cond = list(position = "medial"),
-    rm.ranef = TRUE
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(position = "medial"),
+  rm.ranef = TRUE
 )
 fvisgam(
-    cq_gam_2,
-    view = c("proportion", "log_frequency"),
-    cond = list(position = "final"),
-    rm.ranef = TRUE
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(position = "final"),
+  rm.ranef = TRUE
 )
 ```
 
 ```{r}
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 4.5,
-        vowel = "æ",
-        position = "final",
-        cons_pos = "t.final"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    col = "red",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 4.5,
+    vowel = "æ",
+    position = "final",
+    cons_pos = "t.final"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  col = "red",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 4,
-        vowel = "æ",
-        position = "final",
-        cons_pos = "t.final"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    add = TRUE,
-    col = "yellow",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 4,
+    vowel = "æ",
+    position = "final",
+    cons_pos = "t.final"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  add = TRUE,
+  col = "yellow",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 3.5,
-        vowel = "æ",
-        position = "final",
-        cons_pos = "t.final"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    add = TRUE,
-    col = "black",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 3.5,
+    vowel = "æ",
+    position = "final",
+    cons_pos = "t.final"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  add = TRUE,
+  col = "black",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 5,
-        vowel = "æ",
-        position = "final",
-        cons_pos = "t.final"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    add = TRUE,
-    col = "green",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 5,
+    vowel = "æ",
+    position = "final",
+    cons_pos = "t.final"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  add = TRUE,
+  col = "green",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 5.5,
-        vowel = "æ",
-        position = "final",
-        cons_pos = "t.final"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    add = TRUE,
-    col = "blue",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 5.5,
+    vowel = "æ",
+    position = "final",
+    cons_pos = "t.final"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  add = TRUE,
+  col = "blue",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 ```
 
 ```{r}
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 4.5,
-        vowel = "æ",
-        position = "medial",
-        cons_pos = "t.medial"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    col = "red",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 4.5,
+    vowel = "æ",
+    position = "medial",
+    cons_pos = "t.medial"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  col = "red",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 5,
-        vowel = "æ",
-        position = "medial",
-        cons_pos = "t.medial"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    add = TRUE,
-    col = "green",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 5,
+    vowel = "æ",
+    position = "medial",
+    cons_pos = "t.medial"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  add = TRUE,
+  col = "green",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 plot_smooth(
-    cq_gam_2,
-    "proportion",
-    cond = list(
-        log_frequency = 5.5,
-        vowel = "æ",
-        position = "medial",
-        cons_pos = "t.medial"
-    ),
-    rm.ranef = TRUE,
-    rug = FALSE,
-    add = TRUE,
-    col = "blue",
-    ylim = c(0.1, 0.6),
-    n.grid = 20
+  cq_gam_2,
+  "proportion",
+  cond = list(
+    log_frequency = 5.5,
+    vowel = "æ",
+    position = "medial",
+    cons_pos = "t.medial"
+  ),
+  rm.ranef = TRUE,
+  rug = FALSE,
+  add = TRUE,
+  col = "blue",
+  ylim = c(0.1, 0.6),
+  n.grid = 20
 )
 ```
 
