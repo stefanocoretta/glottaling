@@ -1,0 +1,102 @@
+---
+title: "Peaks ratio analysis"
+author: "Stefano Coretta and Massimiliano Canzi"
+date: "16/03/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("../"))
+library(tidyverse)
+theme_set(theme_minimal())
+library(mgcv)
+library(tidymv)
+library(lmerTest)
+library(effects)
+options(contrasts = rep("contr.treatment", 2))
+```
+
+```{r read-data}
+words <- read_csv("./stimuli/words.csv")
+
+degg <- read_csv("./results/tracegram.csv") %>%
+  mutate(
+    peaks_ratio = maximum / minimum,
+    position = ordered(position, levels = c("medial", "final"))
+  ) %>%
+  left_join(y = words) %>%
+  mutate(
+    freq_bin = ifelse(
+      log_frequency < 4.465,
+      "low",
+      "high"
+    ),
+    vowel = as.ordered(vowel),
+    consonant_2 = ordered(consonant_2, levels = c("k", "t")),
+    cons_pos = interaction(consonant_2, position)
+  ) %>%
+  mutate_if(is.character, as.factor)
+```
+
+# Exploration
+
+```{r}
+degg %>%
+  ggplot(aes(peaks_ratio)) +
+  geom_density()
+```
+
+```{r}
+degg %>%
+  ggplot(aes(peaks_ratio)) +
+  geom_density() +
+  facet_grid(~ speaker)
+```
+
+```{r}
+degg %>%
+  ggplot(aes(peaks_ratio, fill = position)) +
+  geom_density(alpha = 0.3) +
+  facet_grid(~ speaker)
+```
+
+```{r}
+degg %>%
+  ggplot(aes(peaks_ratio, fill = position)) +
+  geom_density(alpha = 0.3) +
+  facet_grid(consonant_2 ~ speaker) +
+  geom_rug()
+```
+
+```{r}
+degg %>%
+  ggplot(aes(proportion, peaks_ratio, colour = position)) +
+  geom_point(alpha = 0.1) +
+  geom_smooth()
+```
+
+```{r}
+degg %>%
+  ggplot(aes(proportion, peaks_ratio, colour = position)) +
+  geom_point(alpha = 0.1) +
+  geom_smooth() +
+  facet_grid(~ consonant_2)
+```
+
+```{r}
+degg %>%
+  filter(peaks_ratio < 0.7) %>%
+  ggplot(aes(proportion, peaks_ratio, colour = position)) +
+  geom_point(alpha = 0.1) +
+  geom_smooth() +
+  facet_grid(~ consonant_2)
+```
+
+```{r}
+degg %>%
+  filter(peaks_ratio < 0.7) %>%
+  ggplot(aes(consonant_2, peaks_ratio)) +
+  geom_violin() +
+  geom_boxplot(width = 0.2)
+```
