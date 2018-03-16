@@ -12,6 +12,7 @@ library(tidyverse)
 theme_set(theme_minimal())
 library(mgcv)
 library(itsadug)
+library(tidymv)
 library(lmerTest)
 library(effects)
 options(contrasts = rep("contr.treatment", 2))
@@ -44,6 +45,38 @@ cq <- read_csv("./results/tracegram.csv") %>%
 
 # Exploration
 
+```{r cq-density}
+cq %>%
+  ggplot(aes(cq)) +
+  geom_density()
+```
+
+```{r cq-density-speaker}
+cq %>%
+  ggplot(aes(cq)) +
+  geom_density() +
+  facet_grid(~ speaker)
+```
+
+m03 has a strong outlier peak around 0.2.
+
+```{r cq-density-speaker}
+cq %>%
+  ggplot(aes(cq, fill = position)) +
+  geom_density(alpha = 0.3) +
+  facet_grid(~ speaker)
+```
+
+```{r cq-density-speaker}
+cq %>%
+  ggplot(aes(cq, fill = position)) +
+  geom_density(alpha = 0.3) +
+  facet_grid(consonant_2 ~ speaker) +
+  geom_rug()
+```
+
+Outliers in m03 are especially from final /k/ and medial/final /t/.
+
 ```{r cq-position}
 cq %>%
   ggplot(aes(proportion, cq, colour = position)) +
@@ -54,6 +87,15 @@ cq %>%
 
 ```{r cq-position-consonant}
 cq %>%
+  ggplot(aes(proportion, cq, colour = position)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth() +
+  facet_grid(speaker ~ consonant_2 )
+```
+
+```{r cq-position-consonant}
+cq %>%
+  filter(cq > 0.3) %>%
   ggplot(aes(proportion, cq, colour = position)) +
   geom_point(alpha = 0.2) +
   geom_smooth() +
@@ -130,8 +172,8 @@ cq_gam_2 <- bam(
     ti(proportion, log_frequency) +
     ti(proportion, log_frequency, by = consonant_2) +
     s(proportion, speaker, bs = "fs") +
-    s(proportion, word, bs = "fs"),
-  data = filter(cq, cq > 0.3),
+    s(proportion, index, bs = "fs"),
+  data = cq,
   method = "fREML"
 )
 
@@ -166,38 +208,6 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   col = "red",
-  ylim = c(0.1, 0.6),
-  n.grid = 20
-)
-plot_smooth(
-  cq_gam_2,
-  "proportion",
-  cond = list(
-    log_frequency = 4,
-    vowel = "æ",
-    position = "final",
-    cons_pos = "t.final"
-  ),
-  rm.ranef = TRUE,
-  rug = FALSE,
-  add = TRUE,
-  col = "yellow",
-  ylim = c(0.1, 0.6),
-  n.grid = 20
-)
-plot_smooth(
-  cq_gam_2,
-  "proportion",
-  cond = list(
-    log_frequency = 3.5,
-    vowel = "æ",
-    position = "final",
-    cons_pos = "t.final"
-  ),
-  rm.ranef = TRUE,
-  rug = FALSE,
-  add = TRUE,
-  col = "black",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
