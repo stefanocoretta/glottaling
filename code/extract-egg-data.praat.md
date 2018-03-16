@@ -6,7 +6,7 @@ data_dir$ = "../data/derived/audio"
 egg_dir$ = "../data/raw/audio"
 createDirectory("../results")
 results_file$ = "../results/tracegram.csv"
-results_header$ = "speaker,word,position,proportion,maximum,minimum"
+results_header$ = "speaker,index,word,position,proportion,maximum,minimum"
 writeFileLine: results_file$, results_header$
 
 smooth_width = 11
@@ -39,12 +39,14 @@ removeObject: audio
 ```praat
 selectObject: textgrid
 sentence_intervals = Get number of intervals: 3
+index = 0
 
 for sentence_interval from 1 to sentence_intervals
     selectObject: textgrid
     sentence_label$ = Get label of interval: 3, sentence_interval
 
     if sentence_label$ == "speech"
+      index = index + 1
         sentence_start = Get start time of interval: 3, sentence_interval
         sentence_end = Get end time of interval: 3, sentence_interval
         word_interval = Get interval at time: 2, sentence_start
@@ -79,7 +81,7 @@ endfor
 selectObject: egg
 sentence_egg = Extract part: sentence_start, sentence_end, "rectangular", 1, "yes"
 
-Filter (pass Hann band): 40, 10000, 100
+sentence_egg_filtered = Filter (pass Hann band): 40, 10000, 100
 @smoothing: smooth_width
 sampling_period = Get sampling period
 time_lag = (smooth_width - 1) / 2 * sampling_period
@@ -89,7 +91,7 @@ sentence_sound_end = Get end time
 Remove points between: 0, vowel_start
 Remove points between: vowel_end, sentence_sound_end
 
-selectObject: sentence_egg
+selectObject: sentence_egg_filtered
 Copy: "degg"
 Formula: "self [col + 1] - self [col]"
 degg = Remove noise: 0, 0.1, 0.025, 80, 10000, 40, "Spectral subtraction"
@@ -109,7 +111,7 @@ for point to egg_points - 2
     point_1 = Get time from index: point
     point_2 = Get time from index: point + 1
     point_3 = Get time from index: point + 2
-    selectObject: sentence_egg
+    selectObject: sentence_egg_filtered
     egg_minimum_1 = Get time of minimum: point_1, point_2, "Sinc70"
     egg_minimum_2 = Get time of minimum: point_2, point_3, "Sinc70"
     period = egg_minimum_2 - egg_minimum_1
@@ -136,7 +138,7 @@ for point to egg_points - 2
               time = egg_minimum_1 - vowel_start
               proportion = (egg_minimum_1 - vowel_start) / (vowel_end - vowel_start)
 
-              results_line$ = "'speaker$','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
+              results_line$ = "'speaker$','index','word$','position$','proportion','degg_maximum_rel','degg_minimum_rel'"
 
               appendFileLine: results_file$, results_line$
           endif
