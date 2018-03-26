@@ -184,13 +184,13 @@ summary(cq_gam_2)
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(position = "medial"),
+  cond = list(position = "medial", vowel = "æ"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(position = "final"),
+  cond = list(position = "final", vowel = "æ"),
   rm.ranef = TRUE
 )
 ```
