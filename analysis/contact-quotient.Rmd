@@ -40,6 +40,7 @@ cq <- read_csv("./results/tracegram.csv") %>%
     cons_pos = interaction(consonant_2, position)
   ) %>%
   mutate_if(is.character, as.factor) %>%
+  mutate(index = as.factor(index)) %>%
   filter(cq > 0, cq < 1)
 ```
 
@@ -171,10 +172,9 @@ cq_gam_2 <- bam(
     s(proportion, by = cons_pos) +
     ti(proportion, log_frequency) +
     ti(proportion, log_frequency, by = consonant_2) +
-    s(proportion, speaker, bs = "fs") +
-    s(proportion, index, bs = "fs"),
-  data = cq,
-  method = "fREML"
+    s(proportion, speaker, bs = "fs"),
+  data = filter(cq, log_frequency > 3.5),
+  method = "ML"
 )
 
 summary(cq_gam_2)
@@ -184,16 +184,36 @@ summary(cq_gam_2)
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(position = "medial", vowel = "æ"),
+  cond = list(
+    consonant_2 = "t",
+    position = "medial", vowel = "æ", cons_pos = "t.medial"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(position = "final", vowel = "æ"),
+  cond = list(
+    consonant_2 = "t",
+    position = "final", vowel = "æ", cons_pos = "t.final"),
   rm.ranef = TRUE
 )
 ```
+
+```{r cq-gam-plot}
+fvisgam(
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(position = "medial", vowel = "æ", consonant_2 = "k", cons_pos = "k.medial"),
+  rm.ranef = TRUE
+)
+fvisgam(
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(position = "final", vowel = "æ", consonant_2 = "k", cons_pos = "k.medial"),
+  rm.ranef = TRUE
+)
+```
+
 
 ```{r}
 plot_smooth(
