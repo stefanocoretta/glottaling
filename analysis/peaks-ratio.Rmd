@@ -100,3 +100,63 @@ degg %>%
   geom_violin() +
   geom_boxplot(width = 0.2)
 ```
+
+```{r}
+cq_gam_3 <- bam(
+  peaks_ratio ~
+    position +
+    vowel +
+    consonant_2 +
+    log_frequency +
+    s(proportion) +
+    s(proportion, by = position) +
+    s(proportion, by = vowel) +
+    s(proportion, by = consonant_2) +
+    s(proportion, by = cons_pos) +
+    ti(proportion, log_frequency) +
+    ti(proportion, log_frequency, by = consonant_2) +
+    s(proportion, speaker, bs = "fs"),
+  data = filter(degg, log_frequency > 3.5),
+  method = "ML"
+)
+
+summary(cq_gam_3)
+```
+
+```{r cq-gam-plot}
+fvisgam(
+  cq_gam_3,
+  view = c("proportion", "log_frequency"),
+  cond = list(
+    consonant_2 = "t",
+    position = "medial", vowel = "æ", cons_pos = "t.medial"),
+  rm.ranef = TRUE
+)
+fvisgam(
+  cq_gam_3,
+  view = c("proportion", "log_frequency"),
+  cond = list(
+    consonant_2 = "t",
+    position = "final", vowel = "æ", cons_pos = "t.final"),
+  rm.ranef = TRUE
+)
+```
+
+```{r cq-gam-plot}
+fvisgam(
+  cq_gam_3,
+  view = c("proportion", "log_frequency"),
+  cond = list(
+    consonant_2 = "k",
+    position = "medial", vowel = "æ", cons_pos = "t.medial"),
+  rm.ranef = TRUE
+)
+fvisgam(
+  cq_gam_3,
+  view = c("proportion", "log_frequency"),
+  cond = list(
+    consonant_2 = "k",
+    position = "final", vowel = "æ", cons_pos = "t.final"),
+  rm.ranef = TRUE
+)
+```
