@@ -19,9 +19,9 @@ The following tibbles are created:
 - `subtlex`: contains frequencies and IPA transcriptions
 
 ```{r get-database}
-ipa <- read_csv("./data/arpabet2ipa.csv") %>%
+ipa <- read_csv("./stimuli/arpabet2ipa.csv") %>%
     mutate(arpabet = tolower(arpabet))
-pronounce <- read_csv("./data/pronounce.csv", col_names = c("word", "arpabet")) %>%
+pronounce <- read_csv("./stimuli/pronounce.csv", col_names = c("word", "arpabet")) %>%
     distinct(word, .keep_all = TRUE) %>%
     mutate(
         word = tolower(word),
@@ -33,7 +33,7 @@ pronounce <- read_csv("./data/pronounce.csv", col_names = c("word", "arpabet")) 
     group_by(word) %>%
     summarise(ipa = paste(ipa, collapse = "."), cv = paste(cv, collapse = ""))
 
-subtlex <- read_csv("./data/subtlex.csv") %>%
+subtlex <- read_csv("./stimuli/subtlex.csv") %>%
     left_join(y = pronounce, by = c("Spelling" = "word"))
 ```
 
