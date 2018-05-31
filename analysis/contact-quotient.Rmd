@@ -15,7 +15,6 @@ library(itsadug)
 library(tidymv)
 library(lmerTest)
 library(effects)
-options(contrasts = rep("contr.treatment", 2))
 ```
 
 # Read data
@@ -42,6 +41,10 @@ cq <- read_csv("./results/tracegram.csv") %>%
   mutate_if(is.character, as.factor) %>%
   mutate(index = as.factor(index)) %>%
   filter(cq > 0, cq < 1)
+
+contrasts(cq$position) <- "contr.treatment"
+contrasts(cq$vowel) <- "contr.treatment"
+contrasts(cq$consonant_2) <- "contr.treatment"
 ```
 
 # Exploration
@@ -161,17 +164,18 @@ filter(cq, speaker == "m03", position == "final") %>%
 ```{r cq-gam}
 cq_gam_2 <- bam(
   cq ~
-    position +
-    vowel +
-    consonant_2 +
-    log_frequency +
-    s(proportion) +
-    s(proportion, by = position) +
-    s(proportion, by = vowel) +
-    s(proportion, by = consonant_2) +
+    # position +
+    # vowel +
+    # consonant_2 +
+    # cons_pos +
+    # log_frequency +
+    # s(proportion) +
+    # s(proportion, by = position) +
+    # s(proportion, by = vowel) +
+    # s(proportion, by = consonant_2) +
     s(proportion, by = cons_pos) +
-    ti(proportion, log_frequency) +
-    ti(proportion, log_frequency, by = consonant_2) +
+    # ti(proportion, log_frequency) +
+    ti(proportion, log_frequency, by = cons_pos) +
     s(proportion, speaker, bs = "fs"),
   data = filter(cq, log_frequency > 3.5),
   method = "ML"
@@ -185,16 +189,14 @@ fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
   cond = list(
-    consonant_2 = "t",
-    position = "medial", vowel = "æ", cons_pos = "t.medial"),
+    cons_pos = "t.medial"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
   cond = list(
-    consonant_2 = "t",
-    position = "final", vowel = "æ", cons_pos = "t.final"),
+    "t.final"),
   rm.ranef = TRUE
 )
 ```
@@ -203,13 +205,13 @@ fvisgam(
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(position = "medial", vowel = "æ", consonant_2 = "k", cons_pos = "k.medial"),
+  cond = list(cons_pos = "k.medial"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(position = "final", vowel = "æ", consonant_2 = "k", cons_pos = "k.medial"),
+  cond = list(cons_pos = "k.final"),
   rm.ranef = TRUE
 )
 ```
