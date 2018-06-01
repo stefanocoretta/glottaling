@@ -36,7 +36,8 @@ cq <- read_csv("./results/tracegram.csv") %>%
     ),
     vowel = as.ordered(vowel),
     consonant_2 = ordered(consonant_2, levels = c("k", "t")),
-    cons_pos = interaction(consonant_2, position)
+    cons_pos = interaction(consonant_2, position),
+    cons_pos = ordered(cons_pos)
   ) %>%
   mutate_if(is.character, as.factor) %>%
   mutate(index = as.factor(index)) %>%
@@ -45,6 +46,7 @@ cq <- read_csv("./results/tracegram.csv") %>%
 contrasts(cq$position) <- "contr.treatment"
 contrasts(cq$vowel) <- "contr.treatment"
 contrasts(cq$consonant_2) <- "contr.treatment"
+contrasts(cq$cons_pos) <- "contr.treatment"
 ```
 
 # Exploration
@@ -164,24 +166,31 @@ filter(cq, speaker == "m03", position == "final") %>%
 ```{r cq-gam}
 cq_gam_2 <- bam(
   cq ~
-    # position +
-    # vowel +
-    # consonant_2 +
-    # cons_pos +
-    # log_frequency +
-    # s(proportion) +
-    # s(proportion, by = position) +
-    # s(proportion, by = vowel) +
-    # s(proportion, by = consonant_2) +
+    cons_pos +
+    s(proportion) +
     s(proportion, by = cons_pos) +
-    # ti(proportion, log_frequency) +
+    ti(proportion, log_frequency) +
     ti(proportion, log_frequency, by = cons_pos) +
-    s(proportion, speaker, bs = "fs"),
+    s(proportion, speaker, bs = "fs", m = 1),
   data = filter(cq, log_frequency > 3.5),
   method = "ML"
 )
 
 summary(cq_gam_2)
+
+cq_gam_2_null <- bam(
+  cq ~
+    # cons_pos +
+    s(proportion) +
+    # s(proportion, by = cons_pos) +
+    ti(proportion, log_frequency) +
+    # ti(proportion, log_frequency, by = cons_pos) +
+    s(proportion, speaker, bs = "fs", m = 1),
+  data = filter(cq, log_frequency > 3.5),
+  method = "ML"
+)
+
+compareML(cq_gam_2_null, cq_gam_2)
 ```
 
 ```{r cq-gam-plot}
@@ -223,9 +232,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 4,
-    vowel = "æ",
-    consonant_2 = "t",
-    position = "final",
     cons_pos = "t.final"
   ),
   rm.ranef = TRUE,
@@ -239,9 +245,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 4.75,
-    vowel = "æ",
-    consonant_2 = "t",
-    position = "final",
     cons_pos = "t.final"
   ),
   rm.ranef = TRUE,
@@ -256,9 +259,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 5.5,
-    vowel = "æ",
-    consonant_2 = "t",
-    position = "final",
     cons_pos = "t.final"
   ),
   rm.ranef = TRUE,
@@ -276,8 +276,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 4.5,
-    vowel = "æ",
-    position = "medial",
     cons_pos = "t.medial"
   ),
   rm.ranef = TRUE,
@@ -291,8 +289,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 5,
-    vowel = "æ",
-    position = "medial",
     cons_pos = "t.medial"
   ),
   rm.ranef = TRUE,
@@ -307,8 +303,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 5.5,
-    vowel = "æ",
-    position = "medial",
     cons_pos = "t.medial"
   ),
   rm.ranef = TRUE,
@@ -326,9 +320,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 4,
-    vowel = "æ",
-    consonant_2 = "k",
-    position = "final",
     cons_pos = "k.final"
   ),
   rm.ranef = TRUE,
@@ -342,9 +333,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 4.75,
-    vowel = "æ",
-    consonant_2 = "k",
-    position = "final",
     cons_pos = "k.final"
   ),
   rm.ranef = TRUE,
@@ -359,9 +347,6 @@ plot_smooth(
   "proportion",
   cond = list(
     log_frequency = 5.5,
-    vowel = "æ",
-    consonant_2 = "k",
-    position = "final",
     cons_pos = "k.final"
   ),
   rm.ranef = TRUE,
