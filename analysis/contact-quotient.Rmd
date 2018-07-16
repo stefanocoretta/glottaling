@@ -197,15 +197,13 @@ compareML(cq_gam_2_null, cq_gam_2)
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(
-    cons_pos = "t.medial"),
+  cond = list(cons_pos = "t.medial"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
-  cond = list(
-    "t.final"),
+  cond = list(cons_pos =  "t.final"),
   rm.ranef = TRUE
 )
 ```
@@ -356,22 +354,6 @@ plot_smooth(
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
-```
-
-```{r cq-gam-ml}
-cq_gam_2_null <- bam(
-  cq ~
-    # cons_pos +
-    s(proportion) +
-    # s(proportion, by = cons_pos) +
-    ti(proportion, log_frequency) +
-    # ti(proportion, log_frequency, by = cons_pos) +
-    s(proportion, speaker, bs = "fs"),
-  data = filter(cq, log_frequency > 3.5),
-  method = "ML"
-)
-
-compareML(cq_gam_2_null, cq_gam_2)
 ```
 
 # LMER
