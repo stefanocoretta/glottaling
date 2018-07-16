@@ -366,6 +366,22 @@ plot_smooth(
 )
 ```
 
+```{r cq-gam-ml}
+cq_gam_2_null <- bam(
+  cq ~
+    # cons_pos +
+    s(proportion) +
+    # s(proportion, by = cons_pos) +
+    ti(proportion, log_frequency) +
+    # ti(proportion, log_frequency, by = cons_pos) +
+    s(proportion, speaker, bs = "fs"),
+  data = filter(cq, log_frequency > 3.5),
+  method = "ML"
+)
+
+compareML(cq_gam_2_null, cq_gam_2)
+```
+
 # LMER
 
 ```{r}
