@@ -172,7 +172,7 @@ cq_gam_2 <- bam(
     ti(proportion, log_frequency) +
     ti(proportion, log_frequency, by = cons_pos) +
     s(proportion, speaker, bs = "fs", m = 1),
-  data = filter(cq, log_frequency > 3.5),
+  data = cq,
   method = "ML"
 )
 
@@ -186,7 +186,7 @@ cq_gam_2_null <- bam(
     ti(proportion, log_frequency) +
     # ti(proportion, log_frequency, by = cons_pos) +
     s(proportion, speaker, bs = "fs", m = 1),
-  data = filter(cq, log_frequency > 3.5),
+  data = cq,
   method = "ML"
 )
 
@@ -229,7 +229,7 @@ plot_smooth(
   cq_gam_2,
   "proportion",
   cond = list(
-    log_frequency = 4,
+    log_frequency = 3.5,
     cons_pos = "t.final"
   ),
   rm.ranef = TRUE,
@@ -242,7 +242,7 @@ plot_smooth(
   cq_gam_2,
   "proportion",
   cond = list(
-    log_frequency = 4.75,
+    log_frequency = 4.5,
     cons_pos = "t.final"
   ),
   rm.ranef = TRUE,

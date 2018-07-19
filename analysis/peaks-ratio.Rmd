@@ -14,7 +14,6 @@ library(mgcv)
 library(tidymv)
 library(lmerTest)
 library(effects)
-options(contrasts = rep("contr.treatment", 2))
 ```
 
 ```{r read-data}
@@ -37,6 +36,11 @@ degg <- read_csv("./results/tracegram.csv") %>%
     cons_pos = interaction(consonant_2, position)
   ) %>%
   mutate_if(is.character, as.factor)
+
+contrasts(degg$position) <- "contr.treatment"
+contrasts(degg$vowel) <- "contr.treatment"
+contrasts(degg$consonant_2) <- "contr.treatment"
+contrasts(degg$cons_pos) <- "contr.treatment"
 ```
 
 # Exploration
@@ -104,19 +108,15 @@ degg %>%
 ```{r}
 cq_gam_3 <- bam(
   peaks_ratio ~
-    position +
-    vowel +
-    consonant_2 +
-    log_frequency +
+    cons_pos +
     s(proportion) +
-    s(proportion, by = position) +
-    s(proportion, by = vowel) +
-    s(proportion, by = consonant_2) +
     s(proportion, by = cons_pos) +
+    # s(log_frequency) +
+    # s(log_frequency, by = cons_pos) +
     ti(proportion, log_frequency) +
-    ti(proportion, log_frequency, by = consonant_2) +
+    ti(proportion, log_frequency, by = cons_pos) +
     s(proportion, speaker, bs = "fs"),
-  data = filter(degg, log_frequency > 3.5),
+  data = degg,
   method = "ML"
 )
 
@@ -127,17 +127,13 @@ summary(cq_gam_3)
 fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
-  cond = list(
-    consonant_2 = "t",
-    position = "medial", vowel = "æ", cons_pos = "t.medial"),
+  cond = list(cons_pos = "t.medial"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
-  cond = list(
-    consonant_2 = "t",
-    position = "final", vowel = "æ", cons_pos = "t.final"),
+  cond = list(cons_pos =  "t.final"),
   rm.ranef = TRUE
 )
 ```
@@ -146,17 +142,13 @@ fvisgam(
 fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
-  cond = list(
-    consonant_2 = "k",
-    position = "medial", vowel = "æ", cons_pos = "t.medial"),
+  cond = list(cons_pos = "k.medial"),
   rm.ranef = TRUE
 )
 fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
-  cond = list(
-    consonant_2 = "k",
-    position = "final", vowel = "æ", cons_pos = "t.final"),
+  cond = list(cons_pos =  "k.final"),
   rm.ranef = TRUE
 )
 ```
