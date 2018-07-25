@@ -202,31 +202,40 @@ fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "t.medial"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.3, 0.5)
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos =  "t.final"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.3, 0.5)
 )
 ```
+
+In /t/-medial higher frequency words have a lower CQ than low frequency. In terms of timing, low frequency have increasing CQ, high frequency have decreasing CQ.
+In /t/-final, decreasing CQ along vowel duration. In high frequency words it starts decreasing earlier than in low frequency words.
 
 ```{r cq-gam-plot}
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "k.medial"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.3, 0.5)
 )
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "k.final"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.3, 0.5)
 )
 ```
 
+In /k/-medial higher frequency words have a higher CQ than low frequency. The CQ towards the end is lower in lower frequency words than in high frequency words. In terms of timing, the CQ decreases through vowel duration, but in low frequency it decreases earlier than in high frequency words.
+In /k/-final CQ is in genaral lower than in /k/-medial. Low frequency words have faster spreading (and more at the end).
 
 ```{r}
 plot_smooth(
@@ -239,7 +248,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   col = "red",
-  ylim = c(0.1, 0.6),
+  ylim = c(0.3, 0.5),
   n.grid = 20
 )
 plot_smooth(
@@ -253,7 +262,7 @@ plot_smooth(
   rug = FALSE,
   add = TRUE,
   col = "green",
-  ylim = c(0.1, 0.6),
+  ylim = c(0.3, 0.5),
   n.grid = 20
 )
 plot_smooth(
@@ -267,7 +276,7 @@ plot_smooth(
   rug = FALSE,
   add = TRUE,
   col = "blue",
-  ylim = c(0.1, 0.6),
+  ylim = c(0.3, 0.5),
   n.grid = 20
 )
 ```
