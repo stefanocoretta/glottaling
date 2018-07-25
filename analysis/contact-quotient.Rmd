@@ -193,6 +193,10 @@ cq_gam_2_null <- bam(
 compareML(cq_gam_2_null, cq_gam_2)
 ```
 
+```{r cq-gam-acf}
+acf_plot(resid(cq_gam_2), split_by = list(cq$index))
+```
+
 ```{r cq-gam-plot}
 fvisgam(
   cq_gam_2,
