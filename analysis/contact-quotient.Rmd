@@ -205,7 +205,7 @@ fvisgam(
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "t.medial"),
   rm.ranef = TRUE,
-  #zlim = c(0.3, 0.5)
+  zlim = c(0.350, 0.5),
   color = heatmapPalette
 )
 fvisgam(
@@ -213,7 +213,7 @@ fvisgam(
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos =  "t.final"),
   rm.ranef = TRUE,
-  #zlim = c(0.3, 0.5)
+  zlim = c(0.350, 0.5),
   color = heatmapPalette
 )
 ```
@@ -227,7 +227,7 @@ fvisgam(
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "k.medial"),
   rm.ranef = TRUE,
-  #zlim = c(0.3, 0.5),
+  zlim = c(0.350, 0.5),
   color = heatmapPalette
 )
 fvisgam(
@@ -235,7 +235,7 @@ fvisgam(
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "k.final"),
   rm.ranef = TRUE,
-  #zlim = c(0.3, 0.5)
+  zlim = c(0.350, 0.5),
   color = heatmapPalette
 )
 ```
@@ -253,7 +253,7 @@ plot_smooth(
   ),
   rm.ranef = TRUE,
   rug = FALSE,
-  col = "indianred3",
+  col = "goldenrod2",
   ylim = c(0.3, 0.5),
   n.grid = 20
 )
@@ -267,7 +267,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   add = TRUE,
-  col = "limegreen",
+  col = "deepskyblue2",
   ylim = c(0.3, 0.5),
   n.grid = 20
 )
@@ -281,7 +281,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   add = TRUE,
-  col = "deepskyblue3",
+  col = "black",
   ylim = c(0.3, 0.5),
   n.grid = 20
 )
@@ -297,7 +297,7 @@ plot_smooth(
   ),
   rm.ranef = TRUE,
   rug = FALSE,
-  col = "indianred3",
+  col = "goldenrod2",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
@@ -311,7 +311,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   add = TRUE,
-  col = "limegreen",
+  col = "deepskyblue2",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
@@ -325,7 +325,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   add = TRUE,
-  col = "deepskyblue3",
+  col = "black",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
@@ -341,7 +341,7 @@ plot_smooth(
   ),
   rm.ranef = TRUE,
   rug = FALSE,
-  col = "red",
+  col = "goldenrod2",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
@@ -355,7 +355,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   add = TRUE,
-  col = "green",
+  col = "deepskyblue2",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
@@ -369,7 +369,7 @@ plot_smooth(
   rm.ranef = TRUE,
   rug = FALSE,
   add = TRUE,
-  col = "blue",
+  col = "black",
   ylim = c(0.1, 0.6),
   n.grid = 20
 )
