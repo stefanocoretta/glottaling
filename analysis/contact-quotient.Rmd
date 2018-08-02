@@ -218,8 +218,11 @@ fvisgam(
 )
 ```
 
-In /t/-medial higher frequency words have a lower CQ than low frequency. In terms of timing, low frequency have increasing CQ, high frequency have decreasing CQ.
-In /t/-final, decreasing CQ along vowel duration. In high frequency words it starts decreasing earlier than in low frequency words.
+In /t/-medial position, vowels of higher-frequency words have a lower CQ than low frequency at the offset. In terms of termporal unfolding from 50% of the duration, vowels in high-frequency words have decreasing CQ (from more to less constricted), while vowels in low-frequency have increasing CQ (from less to more constricted).
+
+In /t/-final position, vowels of any frequency have decreasing CQ along their duration. The CQ starts decreasing earlier in vowels of high-frequency words than in low-frequency words.
+
+In /t/-final position, CQ is in genaral lower than in /t/-medial (towards the end), so that vowels in /t/-final position have less constricted folds.
 
 ```{r cq-gam-plot}
 fvisgam(
@@ -240,8 +243,11 @@ fvisgam(
 )
 ```
 
-In /k/-medial higher frequency words have a higher CQ than low frequency. The CQ towards the end is lower in lower frequency words than in high frequency words. In terms of timing, the CQ decreases through vowel duration, but in low frequency it decreases earlier than in high frequency words.
-In /k/-final CQ is in genaral lower than in /k/-medial. Low frequency words have faster spreading (and more at the end).
+In /k/-medial position, vowels at their offset have a higher CQ in higher-frequency than in low-frequency words. In terms of of termporal unfolding, the CQ decreases along vowel duration (decreasing fold constriction), but in low-frequency words it decreases earlier than in high-frequency words.
+
+In /k/-final position, vowels at their offset have a slightly higher CQ in higher-frequency than in low-frequency words. In terms of of termporal unfolding from 50% of vowel duration, the CQ decreases at a faster rate in low frequency words than in high frequency words.
+
+In /k/-final position, CQ is in genaral lower than in /k/-medial, so that vowels in /k/-final position have less constricted folds.
 
 ```{r}
 plot_smooth(
