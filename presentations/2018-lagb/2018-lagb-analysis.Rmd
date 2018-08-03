@@ -1,0 +1,11 @@
+---
+title: "LAGB 2018"
+author: "Stefano Coretta and Massimiliano Canzi"
+date: "03/08/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
