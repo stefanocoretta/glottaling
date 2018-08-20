@@ -15,6 +15,7 @@ library(itsadug)
 library(tidymv)
 library(lmerTest)
 library(effects)
+heatmapPalette <- c('deepskyblue4', 'lightskyblue3', 'yellowgreen', 'lightgoldenrod1', 'indianred3')
 ```
 
 # Read data
@@ -198,8 +199,6 @@ acf_plot(resid(cq_gam_2), split_by = list(cq$index))
 ```
 
 ```{r cq-gam-plot}
-heatmapPalette <- c('deepskyblue4', 'lightskyblue3', 'yellowgreen', 'lightgoldenrod1', 'indianred3')
-
 fvisgam(
   cq_gam_2,
   view = c("proportion", "log_frequency"),
