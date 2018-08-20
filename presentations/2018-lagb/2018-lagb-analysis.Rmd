@@ -3,9 +3,125 @@ title: "LAGB 2018"
 author: "Stefano Coretta and Massimiliano Canzi"
 date: "03/08/2018"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("../../"))
+library(tidyverse)
+theme_set(theme_minimal())
+library(mgcv)
+library(itsadug)
+library(tidymv)
+heatmapPalette <- c('deepskyblue4', 'lightskyblue3', 'yellowgreen', 'lightgoldenrod1', 'indianred3')
 ```
 
+```{r read-data, message=FALSE}
+words <- read_csv("./stimuli/words.csv")
+
+cq <- read_csv("./results/tracegram.csv") %>%
+  mutate(
+    cq = minimum - maximum,
+    position = ordered(position, levels = c("medial", "final"))
+  ) %>%
+  left_join(y = words) %>%
+  mutate(
+    freq_bin = ifelse(
+      log_frequency < 4.465,
+      "low",
+      "high"
+    ),
+    vowel = as.ordered(vowel),
+    consonant_2 = ordered(consonant_2, levels = c("k", "t")),
+    cons_pos = interaction(consonant_2, position),
+    cons_pos = ordered(cons_pos)
+  ) %>%
+  mutate_if(is.character, as.factor) %>%
+  mutate(index = as.factor(index)) %>%
+  filter(cq > 0, cq < 1)
+
+contrasts(cq$position) <- "contr.treatment"
+contrasts(cq$vowel) <- "contr.treatment"
+contrasts(cq$consonant_2) <- "contr.treatment"
+contrasts(cq$cons_pos) <- "contr.treatment"
+```
+
+```{r cq-gam}
+cq_gam_2 <- bam(
+  cq ~
+    cons_pos +
+    s(proportion) +
+    s(proportion, by = cons_pos) +
+    ti(proportion, log_frequency) +
+    ti(proportion, log_frequency, by = cons_pos) +
+    s(proportion, speaker, bs = "fs", m = 1),
+  data = cq,
+  method = "ML"
+)
+
+cq_gam_2_null <- bam(
+  cq ~
+    # cons_pos +
+    s(proportion) +
+    # s(proportion, by = cons_pos) +
+    ti(proportion, log_frequency) +
+    # ti(proportion, log_frequency, by = cons_pos) +
+    s(proportion, speaker, bs = "fs", m = 1),
+  data = cq,
+  method = "ML"
+)
+
+compareML(cq_gam_2_null, cq_gam_2)
+```
+
+```{r c1-gam-}
+summary(cq_gam_2)
+```
+
+```{r cq-gam-plot}
+png(filename = "./presentations/2018-lagb/fig/t-medial.png", height = 768, width = 1024)
+fvisgam(
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(cons_pos = "t.medial"),
+  rm.ranef = TRUE,
+  zlim = c(0.350, 0.5),
+  color = heatmapPalette
+)
+dev.off()
+
+png(filename = "./presentations/2018-lagb/fig/t-final.png", height = 768, width = 1024)
+fvisgam(
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(cons_pos =  "t.final"),
+  rm.ranef = TRUE,
+  zlim = c(0.350, 0.5),
+  color = heatmapPalette
+)
+dev.off()
+
+png(filename = "./presentations/2018-lagb/fig/k-medial.png", height = 768, width = 1024)
+fvisgam(
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(cons_pos = "k.medial"),
+  rm.ranef = TRUE,
+  zlim = c(0.350, 0.5),
+  color = heatmapPalette
+)
+dev.off()
+
+png(filename = "./presentations/2018-lagb/fig/k-final.png", height = 768, width = 1024)
+fvisgam(
+  cq_gam_2,
+  view = c("proportion", "log_frequency"),
+  cond = list(cons_pos = "k.final"),
+  rm.ranef = TRUE,
+  zlim = c(0.350, 0.5),
+  color = heatmapPalette
+)
+dev.off()
+```
