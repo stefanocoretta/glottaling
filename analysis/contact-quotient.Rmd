@@ -222,7 +222,7 @@ In /t/-medial position, vowels of higher-frequency words have a lower CQ than lo
 
 In /t/-final position, vowels of any frequency have decreasing CQ along their duration. The CQ starts decreasing earlier in vowels of high-frequency words than in low-frequency words.
 
-In /t/-final position, CQ is in genaral lower than in /t/-medial (towards the end), so that vowels in /t/-final position have less constricted folds.
+CQ is in genaral lower in /t/-final position than in /t/-medial (towards the end), so that vowels in /t/-final position have less constricted folds.
 
 ```{r cq-gam-plot}
 fvisgam(
@@ -247,7 +247,7 @@ In /k/-medial position, vowels at their offset have a higher CQ in higher-freque
 
 In /k/-final position, vowels at their offset have a slightly higher CQ in higher-frequency than in low-frequency words. In terms of of termporal unfolding from 50% of vowel duration, the CQ decreases at a faster rate in low frequency words than in high frequency words.
 
-In /k/-final position, CQ is in genaral lower than in /k/-medial, so that vowels in /k/-final position have less constricted folds.
+CQ is in genaral lower in /k/-final position than in /k/-medial, so that vowels in /k/-final position have less constricted folds.
 
 ```{r}
 plot_smooth(
