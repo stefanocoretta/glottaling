@@ -230,6 +230,9 @@ fvisgam(
   cond = list(cons_pos = "k.medial"),
   rm.ranef = TRUE,
   zlim = c(0.350, 0.5),
+  xlab = "Vowel propotion",
+  ylab = "Log frequency",
+  main = "Contact quotient for sentence medial /k/",
   color = heatmapPalette
 )
 fvisgam(
@@ -238,6 +241,9 @@ fvisgam(
   cond = list(cons_pos = "k.final"),
   rm.ranef = TRUE,
   zlim = c(0.350, 0.5),
+  xlab = "Vowel propotion",
+  ylab = "Log frequency",
+  main = "Contact quotient for sentence final /k/",
   color = heatmapPalette
 )
 ```
