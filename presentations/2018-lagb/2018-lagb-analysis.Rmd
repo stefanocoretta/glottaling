@@ -88,6 +88,11 @@ fvisgam(
   cond = list(cons_pos = "t.medial"),
   rm.ranef = TRUE,
   zlim = c(0.350, 0.5),
+  cex.main = 0.85,
+  cex.lab = 0.85,
+  xlab = "Vowel proportion",
+  ylab = "Log frequency",
+  main = "CQ in vowel tokens preceding sentence medial /t/",
   color = heatmapPalette
 )
 dev.off()
@@ -99,6 +104,11 @@ fvisgam(
   cond = list(cons_pos =  "t.final"),
   rm.ranef = TRUE,
   zlim = c(0.350, 0.5),
+  cex.main = 0.85,
+  cex.lab = 0.85,
+  xlab = "Vowel proportion",
+  ylab = "Log frequency",
+  main = "CQ in vowel tokens preceding sentence final /t/",
   color = heatmapPalette
 )
 dev.off()
@@ -110,6 +120,11 @@ fvisgam(
   cond = list(cons_pos = "k.medial"),
   rm.ranef = TRUE,
   zlim = c(0.350, 0.5),
+  cex.main = 0.85,
+  cex.lab = 0.85,
+  xlab = "Vowel proportion",
+  ylab = "Log frequency",
+  main = "CQ in vowel tokens preceding sentence medial /k/",
   color = heatmapPalette
 )
 dev.off()
@@ -121,6 +136,11 @@ fvisgam(
   cond = list(cons_pos = "k.final"),
   rm.ranef = TRUE,
   zlim = c(0.350, 0.5),
+  cex.main = 0.85,
+  cex.lab = 0.85,
+  xlab = "Vowel proportion",
+  ylab = "Log frequency",
+  main = "CQ in vowel tokens preceding sentence final /k/",
   color = heatmapPalette
 )
 dev.off()
