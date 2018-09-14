@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = normalizePath("../"))
 library(tidyverse)
 theme_set(theme_minimal())
-library(mgcv)
+library(itsadug)
 library(tidymv)
 library(lmerTest)
 library(effects)
@@ -111,11 +111,9 @@ cq_gam_3 <- bam(
     cons_pos +
     s(proportion) +
     s(proportion, by = cons_pos) +
-    # s(log_frequency) +
-    # s(log_frequency, by = cons_pos) +
     ti(proportion, log_frequency) +
     ti(proportion, log_frequency, by = cons_pos) +
-    s(proportion, speaker, bs = "fs"),
+    s(proportion, speaker, bs = "fs", m = 1),
   data = degg,
   method = "ML"
 )
@@ -128,13 +126,15 @@ fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "t.medial"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.25, 0.46)
 )
 fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos =  "t.final"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.25, 0.46)
 )
 ```
 
@@ -143,12 +143,14 @@ fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos = "k.medial"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.34, 0.51)
 )
 fvisgam(
   cq_gam_3,
   view = c("proportion", "log_frequency"),
   cond = list(cons_pos =  "k.final"),
-  rm.ranef = TRUE
+  rm.ranef = TRUE,
+  zlim = c(0.34, 0.51)
 )
 ```
