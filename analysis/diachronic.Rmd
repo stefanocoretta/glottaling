@@ -1,0 +1,29 @@
+---
+title: "Manchester /t/-glottaling diachronic study"
+author: "Stefano Coretta and Max Canzi"
+date: "22/09/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+@bermudez-otero2016 and @baranowski2016 argue that the rate of glottal substitution is not affected by lexical frequency.
+
+They do so based on two modelling methods: Kauhanen-Walkden model, logistic regression.
+
+The Kauhanen-Walkden model is problematic because it bins lexical frequency in high and low frequency [@file-muriel2010].
+
+With the logistic regression, the authors show that including an interaction between year and lexical frequency does not improve the model (actually, it makes it worse based on AIC and BIC). So they claim the model *supports* a scenario in which lexical frequency does not play a role. But again this is problematic, because a non-significant effect does not support the null hypothesis.
+
+However, based on Bayes factors derived from the reported BIC values, the null hypothesis is 19 times more probable than the hypothesis that lexical frequency has an effect on rate of change.
+
+```{r}
+bic_null <- 1627.3
+bic_full <- 1633.2
+
+BF01 <- exp((bic_full - bic_null) / 2)
+BF01
+```
+
