@@ -162,6 +162,29 @@ filter(cq, speaker == "m03", position == "final") %>%
   facet_grid(. ~ consonant_2)
 ```
 
+```{r}
+cq %>%
+  ggplot(aes(consonant_2, cq)) +
+  geom_boxplot()
+```
+
+```{r}
+cq %>%
+  group_by(speaker, word) %>%
+  mutate(cq = mean(cq, na.rm = TRUE)) %>%
+  ggplot(aes(consonant_2, cq)) +
+  geom_boxplot()
+```
+
+```{r}
+cq %>%
+  group_by(speaker, word) %>%
+  mutate(cq = mean(cq, na.rm = TRUE)) %>%
+  ggplot(aes(consonant_2, cq)) +
+  geom_boxplot() +
+  facet_grid(position ~ .)
+```
+
 # GAM
 
 ```{r cq-gam}
