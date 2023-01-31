@@ -21,9 +21,9 @@ heatmapPalette <- c('deepskyblue4', 'lightskyblue3', 'yellowgreen', 'lightgolden
 # Read data
 
 ```{r read-data, message=FALSE}
-words <- read_csv("./stimuli/words.csv")
+words <- read_csv("words.csv")
 
-cq <- read_csv("./results/tracegram.csv") %>%
+cq <- read_csv("tracegram.csv") %>%
   mutate(
     cq = minimum - maximum,
     position = ordered(position, levels = c("medial", "final"))
